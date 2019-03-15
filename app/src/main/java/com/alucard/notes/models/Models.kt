@@ -1,4 +1,4 @@
-package com.alucard.notes
+package com.alucard.notes.models
 
 data class Task @JvmOverloads constructor (
     var title: String,
