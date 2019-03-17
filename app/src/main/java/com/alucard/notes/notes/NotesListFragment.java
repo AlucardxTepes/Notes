@@ -15,7 +15,7 @@ public class NotesListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static NotesListFragment newInstance(String param1, String param2) {
+    public static NotesListFragment newInstance() {
         NotesListFragment fragment = new NotesListFragment();
         return fragment;
     }
