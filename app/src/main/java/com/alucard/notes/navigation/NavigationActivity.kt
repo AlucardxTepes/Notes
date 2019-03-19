@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.alucard.notes.R
-import com.alucard.notes.TasksListFragment
 import com.alucard.notes.notes.NotesListFragment
+import com.alucard.notes.tasks.TasksListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_navigation.*
 
@@ -30,7 +30,6 @@ class NavigationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_navigation)
         replaceFragment(TasksListFragment.newInstance())
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-
     }
 
     private fun replaceFragment(fragment: Fragment) {
