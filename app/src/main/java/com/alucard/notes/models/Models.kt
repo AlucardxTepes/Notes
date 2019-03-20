@@ -8,7 +8,7 @@ data class Task @JvmOverloads constructor (
 
 class Todo(
     var description: String,
-    var isComplete: Boolean
+    var isComplete: Boolean = false
 )
 
 class Note(
