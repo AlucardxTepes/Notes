@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alucard.notes.R
 import com.alucard.notes.foundations.BaseRecyclerAdapter
 import com.alucard.notes.models.Task
+import com.alucard.notes.views.TodoView
 import kotlinx.android.synthetic.main.item_task.view.*
-import kotlinx.android.synthetic.main.view_todo.view.*
 
 class TaskAdapter(
     taskList: MutableList<Task> = mutableListOf()
@@ -22,10 +22,9 @@ class TaskAdapter(
             view.titleView.text = modelEntity.title
 
             modelEntity.todos.forEach { todo ->
-                val todoView = LayoutInflater.from(view.context).inflate(R.layout.view_todo, view.todoContainer, false)
+                val todoView = (LayoutInflater.from(view.context).inflate(R.layout.view_todo, view.todoContainer, false) as TodoView)
                     .apply {
-                        descriptionView.text = todo.description
-                        completeCheckBox.isChecked = todo.isComplete
+                        initView(todo)
                     }
                 view.todoContainer.addView(todoView)
             }
