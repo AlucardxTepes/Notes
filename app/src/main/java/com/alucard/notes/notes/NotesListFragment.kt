@@ -1,6 +1,7 @@
 package com.alucard.notes.notes
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,18 @@ import com.alucard.notes.models.Note
 import kotlinx.android.synthetic.main.fragment_notes_list.view.*
 
 class NotesListFragment : Fragment() {
+
+    lateinit var touchActionDelegate: TouchActionDelegate
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        context?.let {
+            if (it is TouchActionDelegate) {
+                touchActionDelegate = it
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +45,15 @@ class NotesListFragment : Fragment() {
             Note("Note1"),
             Note("Note2"),
             Note("Note3")
-        ))
+        ), touchActionDelegate)
         view.recyclerView.adapter = noteAdapter
     }
 
     companion object {
         fun newInstance() = NotesListFragment()
+    }
+
+    interface TouchActionDelegate {
+        fun onAddButtonClicked(value: String)
     }
 }
