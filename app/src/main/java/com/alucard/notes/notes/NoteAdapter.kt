@@ -13,10 +13,10 @@ import kotlinx.android.synthetic.main.view_add_button.view.*
 class NoteAdapter(noteList: MutableList<Note>) : BaseRecyclerAdapter<Note>(noteList) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        if (viewType == TYPE_ADD_BUTTON) {
-            AddButtonViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_add_button, parent, false))
-        } else {
+        if (viewType == TYPE_INFO) {
             NoteViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_note, parent, false))
+        } else {
+            AddButtonViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_add_button, parent, false))
         }
 
     class NoteViewHolder(view: View) : BaseViewHolder<Note>(view) {
@@ -25,7 +25,7 @@ class NoteAdapter(noteList: MutableList<Note>) : BaseRecyclerAdapter<Note>(noteL
         }
     }
 
-    class AddButtonViewHolder(view: View) : BaseRecyclerAdapter.BaseViewHolder<Unit>(view) {
+    class AddButtonViewHolder(view: View) : BaseRecyclerAdapter.AddButtonViewHolder(view) {
         override fun onBind(modelEntity: Unit) {
             view.buttonText.text = view.context.getString(R.string.add_button_note)
         }
