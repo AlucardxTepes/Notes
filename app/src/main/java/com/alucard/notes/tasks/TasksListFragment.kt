@@ -7,15 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alucard.notes.R
-import com.alucard.notes.models.Task
-import com.alucard.notes.models.Todo
 import kotlinx.android.synthetic.main.fragment_tasks_list.*
 
 
 class TasksListFragment : Fragment() {
 
+    lateinit var viewModel: TaskViewModel
     lateinit var touchActionDelegate: TouchActionDelegate
 
     override fun onAttach(context: Context?) {
@@ -28,10 +28,6 @@ class TasksListFragment : Fragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,16 +38,13 @@ class TasksListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        bindViewModel()
         recyclerView.layoutManager = LinearLayoutManager(context)
-        val adapter = TaskAdapter(mutableListOf(
-            Task("Task1", mutableListOf(
-                Todo("Todo1", true),
-                Todo("Todo2")
-            )),
-            Task("Task2")
-        ), touchActionDelegate)
-        recyclerView.adapter = adapter
+        recyclerView.adapter = TaskAdapter(viewModel.getFakeData(), touchActionDelegate)
+    }
+
+    private fun bindViewModel() {
+        viewModel = ViewModelProviders.of(this).get(TaskViewModel::class.java)
     }
 
     companion object {
