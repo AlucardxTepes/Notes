@@ -16,6 +16,12 @@ class TaskAdapter(
     val touchActionDelegate: TasksListFragment.TouchActionDelegate
 ) : BaseRecyclerAdapter<Task>(taskList) {
 
+    fun updateList(data: MutableList<Task>) {
+        dataList.clear()
+        dataList.addAll(data)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         if (viewType == TYPE_INFO) {
             TaskViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_task, parent, false))
