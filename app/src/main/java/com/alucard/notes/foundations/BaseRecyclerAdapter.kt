@@ -3,8 +3,14 @@ package com.alucard.notes.foundations
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseRecyclerAdapter<T>(protected val dataList: MutableList<T>)
+abstract class BaseRecyclerAdapter<T: Any>(protected val dataList: MutableList<T>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    fun updateList(updatedList: List<T>) {
+        dataList.clear()
+        dataList.addAll(updatedList)
+        notifyDataSetChanged()
+    }
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) {

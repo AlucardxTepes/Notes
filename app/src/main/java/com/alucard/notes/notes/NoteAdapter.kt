@@ -11,7 +11,7 @@ import com.alucard.notes.navigation.NavigationActivity
 import com.alucard.notes.views.NoteView
 import kotlinx.android.synthetic.main.view_add_button.view.*
 
-class NoteAdapter(noteList: MutableList<Note>,
+class NoteAdapter(noteList: MutableList<Note> = mutableListOf(),
                   val touchActionDelegate: NotesListFragment.TouchActionDelegate) : BaseRecyclerAdapter<Note>(noteList) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =

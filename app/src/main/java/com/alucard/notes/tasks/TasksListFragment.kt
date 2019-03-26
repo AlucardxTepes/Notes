@@ -48,9 +48,7 @@ class TasksListFragment : Fragment() {
 
     private fun bindViewModel() {
         viewModel = ViewModelProviders.of(this).get(TaskViewModel::class.java)
-        viewModel.taskLiveData.observe(this, Observer { taskList ->
-            adapter.updateList(taskList)
-        })
+        viewModel.taskLiveData.observe(this, Observer { taskList -> adapter.updateList(taskList) })
     }
 
     companion object {
