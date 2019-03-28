@@ -45,7 +45,7 @@ class TasksListFragment : Fragment() {
     }
 
     private fun setContentView() {
-        contentView.initView(touchActionDelegate)
+        contentView.initView(touchActionDelegate, viewModel)
     }
 
     private fun bindViewModel() {

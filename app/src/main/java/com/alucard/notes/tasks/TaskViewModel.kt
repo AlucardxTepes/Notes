@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.alucard.notes.models.Task
 import com.alucard.notes.models.Todo
 
-class TaskViewModel : ViewModel() {
+class TaskViewModel : ViewModel(), TaskListViewContract {
 
     val _taskLiveData: MutableLiveData<MutableList<Task>> = MutableLiveData()
     val taskLiveData: LiveData<MutableList<Task>> = _taskLiveData
@@ -22,5 +22,9 @@ class TaskViewModel : ViewModel() {
         )),
         Task("Task2")
     )
+
+    override fun onTodoUpdated(taskIndex: Int, todoIndex: Int, isComplete: Boolean) {
+        _taskLiveData.value?.get(taskIndex)?.todos?.get(todoIndex)?.isComplete = isComplete
+    }
 
 }
