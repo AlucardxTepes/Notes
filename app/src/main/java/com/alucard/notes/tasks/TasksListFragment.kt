@@ -40,8 +40,8 @@ class TasksListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setContentView()
         bindViewModel()
+        setContentView()
     }
 
     private fun setContentView() {

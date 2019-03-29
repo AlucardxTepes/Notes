@@ -1,6 +1,7 @@
 package com.alucard.notes.views
 
 import android.content.Context
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -17,20 +18,33 @@ class TaskView @JvmOverloads constructor(
 
     private lateinit var task: Task
 
-    fun initView(task: Task) {
+    fun initView(task: Task, todoCheckedCallback: (Int, Boolean) -> Unit) {
         this.task = task
         titleView.text = task.title
-        task.todos.forEach { todo: Todo ->
-            val viewTodo = (LayoutInflater.from(context).inflate(R.layout.view_todo, todoContainer, false) as TodoView)
-            viewTodo.initView(todo)
-            if (isTaskComplete()) {
-                viewTodo.createStrikeThrough(titleView)
-            } else {
-                viewTodo.removeStrikeThrough(titleView)
-            }
+        task.todos.forEachIndexed { todoIndex: Int, todo: Todo ->
+            val viewTodo =
+                (LayoutInflater.from(context).inflate(R.layout.view_todo, todoContainer, false) as TodoView).apply {
+                    initView(todo) { isChecked ->
+                        todoCheckedCallback.invoke(todoIndex, isChecked)
+
+                        if (isTaskComplete()) {
+                            createStrikeThrough()
+                        } else {
+                            removeStrikeThrough()
+                        }
+                    }
+                }
             todoContainer.addView(viewTodo)
         }
     }
 
     private fun isTaskComplete(): Boolean = task.todos.none { !it.isComplete }
+
+    private fun createStrikeThrough() {
+        titleView.paintFlags = titleView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+    }
+
+    private fun removeStrikeThrough() {
+        titleView.paintFlags = titleView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+    }
 }

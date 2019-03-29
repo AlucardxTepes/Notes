@@ -3,7 +3,6 @@ package com.alucard.notes.views
 import android.content.Context
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.alucard.notes.models.Todo
 import kotlinx.android.synthetic.main.view_todo.view.*
@@ -14,33 +13,34 @@ class TodoView @JvmOverloads constructor(
     defStyleAttr: Int = 1
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    fun initView(todo: Todo, callback: (() -> Unit)? = null) {
-        completeCheckBox.isChecked = todo.isComplete
+    fun initView(todo: Todo, callback: ((Boolean) -> Unit)? = null) {
         descriptionView.text = todo.description
+        completeCheckBox.isChecked = todo.isComplete
 
         if (todo.isComplete) {
-            createStrikeThrough(descriptionView)
+            createStrikeThrough()
         }
 
-        setupCheckStateListener(callback)
+        setupCheckStateListener(todo, callback)
     }
 
-    private fun setupCheckStateListener(callback: (() -> Unit)? = null) {
+    private fun setupCheckStateListener(todo: Todo, callback: ((Boolean) -> Unit)? = null) {
         completeCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
-            callback?.invoke()
+            todo.isComplete = isChecked
+            callback?.invoke(isChecked)
             if (isChecked) {
-                createStrikeThrough(buttonView)
+                createStrikeThrough()
             } else {
-                removeStrikeThrough(buttonView)
+                removeStrikeThrough()
             }
         }
     }
 
-    fun createStrikeThrough(textView: TextView) {
-        textView.paintFlags = textView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+    fun createStrikeThrough() {
+        descriptionView.paintFlags = descriptionView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
     }
 
-    fun removeStrikeThrough(textView: TextView) {
-        textView.paintFlags = textView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+    fun removeStrikeThrough() {
+        descriptionView.paintFlags = descriptionView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
     }
 }

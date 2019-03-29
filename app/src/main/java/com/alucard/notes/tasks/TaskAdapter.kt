@@ -24,14 +24,16 @@ class TaskAdapter(
             AddButtonViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_add_button, parent, false))
         }
 
-    class TaskViewHolder(view: View) : BaseViewHolder<Task>(view) {
-        override fun onBind(modelEntity: Task) {
-            (view as TaskView).initView(modelEntity)
+    inner class TaskViewHolder(view: View) : BaseViewHolder<Task>(view) {
+        override fun onBind(modelEntity: Task, listIndex: Int) {
+            (view as TaskView).initView(modelEntity) { todoIndex: Int, isChecked: Boolean ->
+                dataActionDelegate.onTodoUpdated(listIndex, todoIndex, isChecked)
+            }
         }
     }
 
     inner class AddButtonViewHolder(view: View): BaseRecyclerAdapter.AddButtonViewHolder(view) {
-        override fun onBind(modelEntity: Unit) {
+        override fun onBind(modelEntity: Unit, listIndex: Int) {
             view.buttonText.text = view.context.getString(R.string.add_button_task)
             view.setOnClickListener {
                 touchActionDelegate.onAddButtonClicked(NavigationActivity.FRAGMENT_VALUE_TASK)

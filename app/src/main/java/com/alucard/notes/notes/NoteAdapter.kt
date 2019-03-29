@@ -22,13 +22,13 @@ class NoteAdapter(noteList: MutableList<Note> = mutableListOf(),
         }
 
     class NoteViewHolder(view: View) : BaseViewHolder<Note>(view) {
-        override fun onBind(modelEntity: Note) {
+        override fun onBind(modelEntity: Note, listIndex: Int) {
             (view as NoteView).initView(modelEntity)
         }
     }
 
     inner class AddButtonViewHolder(view: View) : BaseRecyclerAdapter.AddButtonViewHolder(view) {
-        override fun onBind(modelEntity: Unit) {
+        override fun onBind(modelEntity: Unit, listIndex: Int) {
             view.buttonText.text = view.context.getString(R.string.add_button_note)
             view.setOnClickListener { touchActionDelegate.onAddButtonClicked(NavigationActivity.FRAGMENT_VALUE_NOTE) }
         }

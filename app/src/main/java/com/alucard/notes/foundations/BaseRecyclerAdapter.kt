@@ -24,14 +24,14 @@ abstract class BaseRecyclerAdapter<T: Any>(protected val dataList: MutableList<T
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is AddButtonViewHolder) {
-            holder.onBind(Unit)
+            holder.onBind(Unit, position - 1)
         } else {
-            (holder as BaseViewHolder<T>).onBind(dataList[position - 1])
+            (holder as BaseViewHolder<T>).onBind(dataList[position - 1], position - 1)
         }
     }
 
     abstract class BaseViewHolder<E>(val view: View) : RecyclerView.ViewHolder(view) {
-        abstract fun onBind(modelEntity: E)
+        abstract fun onBind(modelEntity: E, listIndex: Int)
     }
 
     abstract class AddButtonViewHolder(view: View): BaseViewHolder<Unit>(view)
