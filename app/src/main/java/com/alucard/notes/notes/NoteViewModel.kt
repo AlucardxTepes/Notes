@@ -7,17 +7,12 @@ import com.alucard.notes.models.Note
 
 class NoteViewModel : ViewModel(), NoteListViewContract {
 
-    val _noteLiveData: MutableLiveData<MutableList<Note>> = MutableLiveData()
+    private val model: NoteModel = NoteModel()
+    private val _noteLiveData: MutableLiveData<MutableList<Note>> = MutableLiveData()
     val noteLiveData: LiveData<MutableList<Note>> = _noteLiveData
 
     init {
-        _noteLiveData.postValue(getFakeData())
+        _noteLiveData.postValue(model.getFakeData())
     }
-
-    fun getFakeData(): MutableList<Note> = mutableListOf(
-        Note("Note1"),
-        Note("Note2"),
-        Note("Note3")
-    )
 
 }
