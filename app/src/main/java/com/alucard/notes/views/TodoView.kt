@@ -1,7 +1,6 @@
 package com.alucard.notes.views
 
 import android.content.Context
-import android.graphics.Paint
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.alucard.notes.models.Todo
@@ -18,7 +17,7 @@ class TodoView @JvmOverloads constructor(
         completeCheckBox.isChecked = todo.isComplete
 
         if (todo.isComplete) {
-            createStrikeThrough()
+            descriptionView.setStrikeThrough()
         }
 
         setupCheckStateListener(todo, callback)
@@ -29,18 +28,10 @@ class TodoView @JvmOverloads constructor(
             todo.isComplete = isChecked
             callback?.invoke(isChecked)
             if (isChecked) {
-                createStrikeThrough()
+                descriptionView.setStrikeThrough()
             } else {
-                removeStrikeThrough()
+                descriptionView.removeStrikeThrough()
             }
         }
-    }
-
-    fun createStrikeThrough() {
-        descriptionView.paintFlags = descriptionView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-    }
-
-    fun removeStrikeThrough() {
-        descriptionView.paintFlags = descriptionView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
     }
 }
