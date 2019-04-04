@@ -1,8 +1,9 @@
 package com.alucard.notes.notes
 
 import com.alucard.notes.models.Note
+import javax.inject.Inject
 
-class NoteModel {
+class NoteModel @Inject constructor(){
 
     fun getFakeData(): MutableList<Note> = mutableListOf(
         Note("Note1"),

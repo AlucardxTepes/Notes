@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -37,6 +38,13 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Toothpick
+    implementation 'com.github.stephanenicolas.toothpick:toothpick-runtime:2.1.0'
+    implementation 'com.github.stephanenicolas.toothpick:smoothie-androidx:2.1.0'
+    kapt 'com.github.stephanenicolas.toothpick:toothpick-compiler:2.1.0'
+    annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:2.1.0'
+    testImplementation 'com.github.stephanenicolas.toothpick:toothpick-testing-junit5:2.1.0'
 }
 repositories {
     mavenCentral()
