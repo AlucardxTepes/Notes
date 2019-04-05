@@ -5,18 +5,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.alucard.notes.models.Task
 import toothpick.Toothpick
+import toothpick.config.Module
 import javax.inject.Inject
 
 class TaskViewModel : ViewModel(), TaskListViewContract {
 
     @Inject
-    lateinit var model: TaskModel
+    lateinit var model: ITaskModel
 
     private val _taskLiveData: MutableLiveData<MutableList<Task>> = MutableLiveData()
     val taskLiveData: LiveData<MutableList<Task>> = _taskLiveData
 
     init {
         val scope = Toothpick.openScope(this)
+        scope.installModules(Module().apply {
+            bind(ITaskModel::class.java).toInstance(TaskLocalModel())
+        })
         Toothpick.inject(this, scope)
         _taskLiveData.postValue(model.getFakeData())
     }
