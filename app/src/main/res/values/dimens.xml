@@ -13,4 +13,6 @@
     <dimen name="text_size_large">24sp</dimen>
     <dimen name="text_size_medium">16sp</dimen>
     <dimen name="text_size_small">12sp</dimen>
+
+    <dimen name="image_icon_default">32dp</dimen>
 </resources>
