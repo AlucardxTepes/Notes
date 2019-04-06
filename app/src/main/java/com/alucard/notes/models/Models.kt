@@ -1,6 +1,6 @@
 package com.alucard.notes.models
 
-data class Task @JvmOverloads constructor (
+data class Task @JvmOverloads constructor(
     var title: String,
     val todos: MutableList<Todo> = mutableListOf(),
     var tag: Tag? = null

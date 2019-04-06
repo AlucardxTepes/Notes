@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.alucard.notes.R
@@ -36,7 +35,19 @@ class CreateActivity : AppCompatActivity(), CreateNoteFragment.OnFragmentInterac
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         when(item?.itemId) {
-            R.id.saveItem -> Toast.makeText(this, "Save clicked", LENGTH_SHORT).show()
+            R.id.saveItem -> {
+                supportFragmentManager.findFragmentById(R.id.fragmentHolder)?.run {
+                    if (this is CreateTaskFragment) {
+                        this.saveTask { success ->
+                            if (success) {
+                                this@CreateActivity.supportFinishAfterTransition()
+                            } else {
+                                Toast.makeText(this@CreateActivity, getString(R.string.toast_error_saving), Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         return super.onOptionsItemSelected(item)

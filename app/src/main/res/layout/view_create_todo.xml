@@ -6,6 +6,7 @@
 
     <ImageView
         android:id="@+id/imageView"
+        android:src="@drawable/ic_plus"
         android:layout_width="@dimen/image_icon_default"
         android:layout_height="@dimen/image_icon_default"
         android:layout_marginStart="@dimen/item_margin_small"
