@@ -16,7 +16,7 @@ class TaskLocalModel @Inject constructor() : ITaskModel {
     )
 
     override fun addTask(task: Task, callback: SuccessCallback) {
-        Log.d("AddTask:", task.toString())
+        Log.d("Alucard:", task.toString())
         callback.invoke(true)
     }
 

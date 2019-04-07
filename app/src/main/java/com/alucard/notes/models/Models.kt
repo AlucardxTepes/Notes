@@ -6,17 +6,17 @@ data class Task @JvmOverloads constructor(
     var tag: Tag? = null
 )
 
-class Todo(
+data class Todo(
     var description: String,
     var isComplete: Boolean = false
 )
 
-class Note(
+data class Note(
     var description: String,
     var tag: Tag? = null
 )
 
-class Tag(
+data class Tag(
     val name: String,
     val colourResId: Int
 )

@@ -14,7 +14,7 @@ import com.alucard.notes.foundations.NullFieldChecker
 import com.alucard.notes.foundations.StateChangeTextWatcher
 import com.alucard.notes.models.Task
 import com.alucard.notes.models.Todo
-import com.alucard.notes.tasks.TaskLocalModel
+import com.alucard.notes.tasks.ITaskModel
 import com.alucard.notes.views.CreateTodoView
 import kotlinx.android.synthetic.main.fragment_create_task.*
 import kotlinx.android.synthetic.main.view_create_task.view.*
@@ -27,7 +27,7 @@ private const val MAX_TODO_COUNT = 5
 class CreateTaskFragment : Fragment() {
 
     private var listener: OnFragmentInteractionListener? = null
-    @Inject lateinit var model: TaskLocalModel
+    @Inject lateinit var model: ITaskModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

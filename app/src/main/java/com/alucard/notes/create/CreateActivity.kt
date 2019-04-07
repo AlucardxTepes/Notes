@@ -10,7 +10,8 @@ import androidx.fragment.app.Fragment
 import com.alucard.notes.R
 import com.alucard.notes.navigation.NavigationActivity
 
-class CreateActivity : AppCompatActivity(), CreateNoteFragment.OnFragmentInteractionListener, CreateTaskFragment.OnFragmentInteractionListener {
+class CreateActivity : AppCompatActivity(), CreateNoteFragment.OnFragmentInteractionListener,
+    CreateTaskFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,16 +35,18 @@ class CreateActivity : AppCompatActivity(), CreateNoteFragment.OnFragmentInterac
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
-        when(item?.itemId) {
+        when (item?.itemId) {
             R.id.saveItem -> {
                 supportFragmentManager.findFragmentById(R.id.fragmentHolder)?.run {
                     if (this is CreateTaskFragment) {
                         this.saveTask { success ->
-                            if (success) {
-                                this@CreateActivity.supportFinishAfterTransition()
-                            } else {
-                                Toast.makeText(this@CreateActivity, getString(R.string.toast_error_saving), Toast.LENGTH_SHORT).show()
-                            }
+                            if (success) this@CreateActivity.supportFinishAfterTransition()
+                            else Toast.makeText(this@CreateActivity, getString(R.string.toast_error_saving), Toast.LENGTH_SHORT).show()
+                        }
+                    } else if (this is CreateNoteFragment) {
+                        this.saveNote { success ->
+                            if (success) this@CreateActivity.supportFinishAfterTransition()
+                            else Toast.makeText(this@CreateActivity, getString(R.string.toast_error_saving), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
