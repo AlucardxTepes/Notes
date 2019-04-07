@@ -26,9 +26,8 @@ android {
 }
 dependencies {
     def lifecycle_version = "2.0.0"
+    def room_version = "2.1.0-alpha06"
 
-    // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'com.google.android.material:material:1.0.0-beta01'
@@ -39,12 +38,19 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+
     // Toothpick
     implementation 'com.github.stephanenicolas.toothpick:toothpick-runtime:2.1.0'
     implementation 'com.github.stephanenicolas.toothpick:smoothie-androidx:2.1.0'
     kapt 'com.github.stephanenicolas.toothpick:toothpick-compiler:2.1.0'
     annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:2.1.0'
     testImplementation 'com.github.stephanenicolas.toothpick:toothpick-testing-junit5:2.1.0'
+
+    // Room Library
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 }
 repositories {
     mavenCentral()

@@ -1,10 +1,14 @@
 package com.alucard.notes.notes
 
 import android.util.Log
+import com.alucard.notes.application.NoteApplication
+import com.alucard.notes.database.RoomDatabaseClient
 import com.alucard.notes.models.Note
 import javax.inject.Inject
 
 class NoteLocalModel @Inject constructor() : INoteModel{
+
+    private val databaseClient = RoomDatabaseClient.getInstance(NoteApplication.instance.applicationContext)
 
     override fun getFakeData(): MutableList<Note> = mutableListOf(
         Note("Note1"),

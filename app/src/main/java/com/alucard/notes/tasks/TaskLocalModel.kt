@@ -1,11 +1,15 @@
 package com.alucard.notes.tasks
 
 import android.util.Log
+import com.alucard.notes.application.NoteApplication
+import com.alucard.notes.database.RoomDatabaseClient
 import com.alucard.notes.models.Task
 import com.alucard.notes.models.Todo
 import javax.inject.Inject
 
 class TaskLocalModel @Inject constructor() : ITaskModel {
+
+    private val databaseClient = RoomDatabaseClient.getInstance(NoteApplication.instance.applicationContext)
 
     override fun getFakeData(): MutableList<Task> = mutableListOf(
         Task("Task1", mutableListOf(
