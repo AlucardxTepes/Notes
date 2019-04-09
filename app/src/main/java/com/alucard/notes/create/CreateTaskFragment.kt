@@ -107,7 +107,7 @@ class CreateTaskFragment : Fragment() {
                         // todo
                         if (containerView.getChildAt(i).todoEditText.editableText?.toString() != null) {
                             todoList.add(
-                                Todo(containerView.getChildAt(i).todoEditText.editableText.toString())
+                                Todo(description = containerView.getChildAt(i).todoEditText.editableText.toString())
                             )
                         }
                     }
@@ -135,7 +135,7 @@ class CreateTaskFragment : Fragment() {
                         // todo
                         if (!containerView.getChildAt(i).todoEditText.editableText.isNullOrEmpty()) {
                             todoList.add(
-                                Todo(containerView.getChildAt(i).todoEditText.editableText.toString())
+                                Todo(description = containerView.getChildAt(i).todoEditText.editableText.toString())
                             )
                         }
                     }

@@ -1,6 +1,5 @@
 package com.alucard.notes.notes
 
-import android.util.Log
 import com.alucard.notes.application.NoteApplication
 import com.alucard.notes.database.RoomDatabaseClient
 import com.alucard.notes.models.Note
@@ -10,28 +9,27 @@ class NoteLocalModel @Inject constructor() : INoteModel{
 
     private val databaseClient = RoomDatabaseClient.getInstance(NoteApplication.instance.applicationContext)
 
-    override fun getFakeData(): MutableList<Note> = mutableListOf(
-        Note("Note1"),
-        Note("Note2"),
-        Note("Note3")
-    )
+    override fun getFakeData(): MutableList<Note> = databaseClient.noteDAO().retrieveNotes().toMutableList()
+//        mutableListOf(
+//        Note(description = "Note1"),
+//        Note(description = "Note2"),
+//        Note(description = "Note3")
+//    )
 
     override fun addNote(note: Note, callback: SuccessCallback) {
-        Log.d("Alucard", note.toString())
+        databaseClient.noteDAO().addNote(note)
         callback.invoke(true)
     }
 
     override fun updateNote(note: Note, callback: SuccessCallback) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        databaseClient.noteDAO().updateNote(note)
     }
 
     override fun deleteNote(note: Note, callback: SuccessCallback) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        databaseClient.noteDAO().deleteNote(note)
     }
 
-    override fun retrieveNotes(): List<Note> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun retrieveNotes(): List<Note> = databaseClient.noteDAO().retrieveNotes()
 
 
 }
