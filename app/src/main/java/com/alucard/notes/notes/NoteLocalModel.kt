@@ -29,7 +29,7 @@ class NoteLocalModel @Inject constructor() : INoteModel{
         databaseClient.noteDAO().deleteNote(note)
     }
 
-    override fun retrieveNotes(): List<Note> = databaseClient.noteDAO().retrieveNotes()
+    override fun retrieveNotes(): MutableList<Note> = databaseClient.noteDAO().retrieveNotes()
 
 
 }

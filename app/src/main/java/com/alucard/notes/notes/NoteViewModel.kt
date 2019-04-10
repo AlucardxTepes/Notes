@@ -18,7 +18,11 @@ class NoteViewModel : ViewModel(), NoteListViewContract {
 
     init {
         Toothpick.inject(this, ApplicationScope.scope)
-        _noteLiveData.postValue(model.getFakeData())
+        loadData()
+    }
+
+    fun loadData() {
+        _noteLiveData.postValue(model.retrieveNotes())
     }
 
 }

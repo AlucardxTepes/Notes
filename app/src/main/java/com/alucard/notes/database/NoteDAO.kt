@@ -16,6 +16,6 @@ interface NoteDAO {
     fun deleteNote(note: Note)
 
     @Query("SELECT * FROM notes")
-    fun retrieveNotes(): List<Note>
+    fun retrieveNotes(): MutableList<Note>
 
 }
