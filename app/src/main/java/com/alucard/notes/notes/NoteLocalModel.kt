@@ -9,12 +9,7 @@ class NoteLocalModel @Inject constructor() : INoteModel{
 
     private val databaseClient = RoomDatabaseClient.getInstance(NoteApplication.instance.applicationContext)
 
-    override fun getFakeData(): MutableList<Note> = databaseClient.noteDAO().retrieveNotes().toMutableList()
-//        mutableListOf(
-//        Note(description = "Note1"),
-//        Note(description = "Note2"),
-//        Note(description = "Note3")
-//    )
+    override fun getFakeData(): MutableList<Note> = databaseClient.noteDAO().retrieveNotes()
 
     override fun addNote(note: Note, callback: SuccessCallback) {
         databaseClient.noteDAO().addNote(note)
@@ -23,10 +18,12 @@ class NoteLocalModel @Inject constructor() : INoteModel{
 
     override fun updateNote(note: Note, callback: SuccessCallback) {
         databaseClient.noteDAO().updateNote(note)
+        callback.invoke(true)
     }
 
     override fun deleteNote(note: Note, callback: SuccessCallback) {
         databaseClient.noteDAO().deleteNote(note)
+        callback.invoke(true)
     }
 
     override fun retrieveNotes(): MutableList<Note> = databaseClient.noteDAO().retrieveNotes()
