@@ -25,6 +25,10 @@ class TaskViewModel : ViewModel(), TaskListViewContract {
         _taskLiveData.postValue(model.getFakeData())
     }
 
+    fun loadData() {
+        _taskLiveData.postValue(model.retrieveTasks().toMutableList())
+    }
+
     override fun onTodoUpdated(taskIndex: Int, todoIndex: Int, isComplete: Boolean) {
         _taskLiveData.value?.get(taskIndex)?.todos?.get(todoIndex)?.isComplete = isComplete
     }

@@ -90,35 +90,6 @@ class CreateTaskFragment : Fragment() {
                 callback.invoke(true)
             }
         } ?: callback.invoke(false)
-
-        if (!isTaskEmpty()) {
-
-            containerView.run {
-
-                var taskField: String? = null
-                var todoList: MutableList<Todo> = mutableListOf()
-
-                for (i in 0 until containerView.childCount) {
-
-                    if (i == 0) {
-                        // task
-                        taskField = containerView.getChildAt(i).taskEditText?.toString()
-                    } else {
-                        // todo
-                        if (containerView.getChildAt(i).todoEditText.editableText?.toString() != null) {
-                            todoList.add(
-                                Todo(description = containerView.getChildAt(i).todoEditText.editableText.toString())
-                            )
-                        }
-                    }
-                }
-                taskField?.let {
-                    model.addTask(Task(it, todoList)) {
-                        // empty callback
-                    }
-                }
-            }
-        }
     }
 
     private fun createTask(): Task? {
@@ -129,10 +100,8 @@ class CreateTaskFragment : Fragment() {
 
                 for (i in 0 until containerView.childCount) {
                     if (i == 0) {
-                        // task
-                        taskField = containerView.getChildAt(i).taskEditText?.toString()
+                        taskField = containerView.getChildAt(i).taskEditText.editableText?.toString()
                     } else {
-                        // todo
                         if (!containerView.getChildAt(i).todoEditText.editableText.isNullOrEmpty()) {
                             todoList.add(
                                 Todo(description = containerView.getChildAt(i).todoEditText.editableText.toString())
@@ -140,7 +109,9 @@ class CreateTaskFragment : Fragment() {
                         }
                     }
                 }
-                return taskField?.let { Task(taskField, todoList) }
+                return taskField?.let {
+                    Task(taskField, todoList)
+                }
             }
         } else {
             return null

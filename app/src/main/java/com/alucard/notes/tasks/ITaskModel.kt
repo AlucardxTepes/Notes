@@ -7,10 +7,9 @@ typealias SuccessCallback = (Boolean) ->Unit
 interface ITaskModel {
 
     fun addTask(task: Task, callback: SuccessCallback)
-    fun updateTask(task: Task)
-    fun deleteTask(task: Task)
+    fun updateTask(task: Task, callback: SuccessCallback)
+    fun deleteTask(task: Task, callback: SuccessCallback)
     fun retrieveTasks(): List<Task>
-
 
     fun getFakeData(): MutableList<Task>
 }
