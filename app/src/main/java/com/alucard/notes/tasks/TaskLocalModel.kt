@@ -3,6 +3,7 @@ package com.alucard.notes.tasks
 import com.alucard.notes.application.NoteApplication
 import com.alucard.notes.database.RoomDatabaseClient
 import com.alucard.notes.models.Task
+import com.alucard.notes.models.Todo
 import javax.inject.Inject
 
 class TaskLocalModel @Inject constructor() : ITaskModel {
@@ -19,6 +20,11 @@ class TaskLocalModel @Inject constructor() : ITaskModel {
 
     override fun updateTask(task: Task, callback: SuccessCallback) {
         databaseClient.taskDAO().updateTask(task)
+        callback.invoke(true)
+    }
+
+    override fun updateTodo(todo: Todo, callback: SuccessCallback) {
+        databaseClient.taskDAO().updateTodo(todo)
         callback.invoke(true)
     }
 

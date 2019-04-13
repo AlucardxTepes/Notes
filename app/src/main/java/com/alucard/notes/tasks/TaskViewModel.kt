@@ -30,7 +30,23 @@ class TaskViewModel : ViewModel(), TaskListViewContract {
     }
 
     override fun onTodoUpdated(taskIndex: Int, todoIndex: Int, isComplete: Boolean) {
-        _taskLiveData.value?.get(taskIndex)?.todos?.get(todoIndex)?.isComplete = isComplete
+        _taskLiveData.value?.let {
+            val todo = it[taskIndex].todos[todoIndex]
+            todo.apply {
+                this.isComplete = isComplete
+                this.taskId = taskId
+            }
+            model.updateTodo(todo) {
+                loadData() // refresh list
+            }
+        }
     }
 
+    override fun onTaskDeleted(taskIndex: Int) {
+        _taskLiveData.value?.let {
+            model.deleteTask(it[taskIndex]) {
+                loadData() // refresh view
+            }
+        }
+    }
 }

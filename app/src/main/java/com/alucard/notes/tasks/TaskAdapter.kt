@@ -26,13 +26,19 @@ class TaskAdapter(
 
     inner class TaskViewHolder(view: View) : BaseViewHolder<Task>(view) {
         override fun onBind(modelEntity: Task, listIndex: Int) {
-            (view as TaskView).initView(modelEntity) { todoIndex: Int, isChecked: Boolean ->
-                dataActionDelegate.onTodoUpdated(listIndex, todoIndex, isChecked)
-            }
+            (view as TaskView).initView(
+                task = modelEntity,
+                todoCheckedCallback = { todoIndex: Int, isChecked: Boolean ->
+                    dataActionDelegate.onTodoUpdated(listIndex, todoIndex, isChecked)
+                },
+                deleteCallback = {
+                    dataActionDelegate.onTaskDeleted(listIndex)
+                }
+            )
         }
     }
 
-    inner class AddButtonViewHolder(view: View): BaseRecyclerAdapter.AddButtonViewHolder(view) {
+    inner class AddButtonViewHolder(view: View) : BaseRecyclerAdapter.AddButtonViewHolder(view) {
         override fun onBind(modelEntity: Unit, listIndex: Int) {
             view.buttonText.text = view.context.getString(R.string.add_button_task)
             view.setOnClickListener {

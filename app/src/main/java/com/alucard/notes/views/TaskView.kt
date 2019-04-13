@@ -17,9 +17,14 @@ class TaskView @JvmOverloads constructor(
 
     private lateinit var task: Task
 
-    fun initView(task: Task, todoCheckedCallback: (Int, Boolean) -> Unit) {
+    fun initView(task: Task, todoCheckedCallback: (Int, Boolean) -> Unit, deleteCallback: () -> Unit) {
+        resetChildViews()
         this.task = task
-        titleView.text = task.title
+        initTaskTaskLine(deleteCallback)
+        addChildViews(todoCheckedCallback)
+    }
+
+    private fun addChildViews(todoCheckedCallback: (Int, Boolean) -> Unit) {
         task.todos.forEachIndexed { todoIndex: Int, todo: Todo ->
             val viewTodo =
                 (LayoutInflater.from(context).inflate(R.layout.view_todo, todoContainer, false) as TodoView).apply {
@@ -35,6 +40,15 @@ class TaskView @JvmOverloads constructor(
                 }
             todoContainer.addView(viewTodo)
         }
+    }
+
+    private fun resetChildViews() {
+        todoContainer.removeAllViewsInLayout()
+    }
+
+    private fun initTaskTaskLine(deleteCallback: () -> Unit) {
+        titleView.text = task.title
+        imageButton.setOnClickListener { deleteCallback.invoke() }
     }
 
     private fun isTaskComplete(): Boolean = task.todos.none { !it.isComplete }
