@@ -13,6 +13,8 @@ import com.alucard.notes.foundations.NullFieldChecker
 import com.alucard.notes.models.Note
 import com.alucard.notes.notes.INoteModel
 import kotlinx.android.synthetic.main.fragment_create_note.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import toothpick.Toothpick
 import javax.inject.Inject
 
@@ -53,11 +55,13 @@ class CreateNoteFragment : Fragment(), NullFieldChecker {
     override fun hasNullField(): Boolean = noteEditText.editableText.isNullOrEmpty()
 
     fun saveNote(callback: (Boolean) -> Unit) {
-        createNote()?.let { note ->
-            model.addNote(note) { success ->
-                callback.invoke(success)
-            }
-        } ?: callback.invoke(false)
+        GlobalScope.launch {
+            createNote()?.let { note ->
+                model.addNote(note) { success ->
+                    callback.invoke(success)
+                }
+            } ?: callback.invoke(false)
+        }
     }
 
     private fun createNote(): Note? {

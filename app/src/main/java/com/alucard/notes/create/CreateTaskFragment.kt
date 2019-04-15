@@ -19,6 +19,8 @@ import com.alucard.notes.views.CreateTodoView
 import kotlinx.android.synthetic.main.fragment_create_task.*
 import kotlinx.android.synthetic.main.view_create_task.view.*
 import kotlinx.android.synthetic.main.view_create_todo.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import toothpick.Toothpick
 import javax.inject.Inject
 
@@ -59,18 +61,25 @@ class CreateTaskFragment : Fragment() {
 
     private fun addTodoView() {
         if (canAddTodo()) {
-            val view =
-                LayoutInflater.from(context).inflate(R.layout.view_create_todo, containerView, false) as CreateTodoView
-            view.todoEditText.addTextChangedListener(object : StateChangeTextWatcher() {
-                override fun afterTextChanged(s: Editable?) {
-                    if (!s.isNullOrEmpty() && previousValue.isNullOrEmpty()) {
-                        addTodoView()
-                    } else if (!previousValue.isNullOrEmpty() && s.isNullOrEmpty()) {
-                        removeTodoView(view)
+            val view = (LayoutInflater.from(context).inflate(R.layout.view_create_todo, containerView, false) as CreateTodoView).apply {
+                todoEditText.addTextChangedListener(object: StateChangeTextWatcher() {
+                    override fun afterTextChanged(s: Editable?) {
+
+                        if (!s.isNullOrEmpty() && previousValue.isNullOrEmpty()) {
+                            addTodoView()
+                        } else if (!previousValue.isNullOrEmpty() && s.isNullOrEmpty()) {
+                            removeTodoView(this@apply)
+
+                            // max_todo_count will be 5 and something will be removed if count went from 6 -> 5
+                            if (containerView.childCount == MAX_TODO_COUNT) {
+                                addTodoView()
+                            }
+                        }
+
+                        super.afterTextChanged(s)
                     }
-                    super.afterTextChanged(s)
-                }
-            })
+                })
+            }
             containerView.addView(view)
         }
     }
@@ -84,11 +93,13 @@ class CreateTaskFragment : Fragment() {
     private fun isTaskEmpty(): Boolean = createTaskView.taskEditText.editableText.isNullOrEmpty()
 
     fun saveTask(callback: (Boolean) -> Unit) {
-        createTask()?.let { task ->
-            model.addTask(task) { success ->
-                callback.invoke(success)
-            }
-        } ?: callback.invoke(false)
+        GlobalScope.launch {
+            createTask()?.let { task ->
+                model.addTask(task) { success ->
+                    callback.invoke(success)
+                }
+            } ?: callback.invoke(false)
+        }
     }
 
     private fun createTask(): Task? {

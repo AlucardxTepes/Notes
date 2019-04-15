@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.alucard.notes.models.Task
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import toothpick.Toothpick
 import toothpick.config.Module
 import javax.inject.Inject
@@ -34,22 +36,26 @@ class TaskViewModel : ViewModel(), TaskListViewContract {
     }
 
     override fun onTodoUpdated(taskIndex: Int, todoIndex: Int, isComplete: Boolean) {
-        _taskLiveData.value?.let {
-            val todo = it[taskIndex].todos[todoIndex]
-            todo.apply {
-                this.isComplete = isComplete
-                this.taskId = taskId
-            }
-            model.updateTodo(todo) {
-                loadData() // refresh list
+        GlobalScope.launch {
+            _taskLiveData.value?.let {
+                val todo = it[taskIndex].todos[todoIndex]
+                todo.apply {
+                    this.isComplete = isComplete
+                    this.taskId = it[taskIndex].uid
+                }
+                model.updateTodo(todo) {
+                    loadData() // refresh list
+                }
             }
         }
     }
 
     override fun onTaskDeleted(taskIndex: Int) {
-        _taskLiveData.value?.let {
-            model.deleteTask(it[taskIndex]) {
-                loadData() // refresh view
+        GlobalScope.launch {
+            _taskLiveData.value?.let {
+                model.deleteTask(it[taskIndex]) {
+                    loadData() // refresh view
+                }
             }
         }
     }
