@@ -53,10 +53,9 @@ class CreateNoteFragment : Fragment(), NullFieldChecker {
     override fun hasNullField(): Boolean = noteEditText.editableText.isNullOrEmpty()
 
     fun saveNote(callback: (Boolean) -> Unit) {
-        createNote()?.let {
-            model.addNote(it) {
-                // Assume model always works
-                callback.invoke(true)
+        createNote()?.let { note ->
+            model.addNote(note) { success ->
+                callback.invoke(success)
             }
         } ?: callback.invoke(false)
     }

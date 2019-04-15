@@ -22,11 +22,15 @@ class TaskViewModel : ViewModel(), TaskListViewContract {
             bind(ITaskModel::class.java).toInstance(TaskLocalModel())
         })
         Toothpick.inject(this, scope)
-        _taskLiveData.postValue(model.getFakeData())
+        loadData()
     }
 
     fun loadData() {
-        _taskLiveData.postValue(model.retrieveTasks().toMutableList())
+        model.retrieveTasks { nullableList ->
+            nullableList?.let {
+                _taskLiveData.postValue(it.toMutableList())
+            }
+        }
     }
 
     override fun onTodoUpdated(taskIndex: Int, todoIndex: Int, isComplete: Boolean) {

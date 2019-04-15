@@ -31,7 +31,6 @@ abstract class RoomDatabaseClient : RoomDatabase() {
 
         private fun createDatabase(context: Context): RoomDatabaseClient =
             Room.databaseBuilder(context, RoomDatabaseClient::class.java, DB_NAME)
-                .allowMainThreadQueries() // TODO: Replace with Kotlin Coroutines
                 .build()
     }
 }
